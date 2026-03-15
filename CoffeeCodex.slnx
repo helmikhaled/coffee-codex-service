@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CoffeeCodex.API/CoffeeCodex.API.csproj" />
+    <Project Path="src/CoffeeCodex.Application/CoffeeCodex.Application.csproj" />
+    <Project Path="src/CoffeeCodex.Domain/CoffeeCodex.Domain.csproj" />
+    <Project Path="src/CoffeeCodex.Infrastructure/CoffeeCodex.Infrastructure.csproj" />
+    <Project Path="src/CoffeeCodex.Shared/CoffeeCodex.Shared.csproj" />
+  </Folder>
+</Solution>
