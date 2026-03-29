@@ -70,5 +70,17 @@ internal sealed class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
         builder.HasMany(recipe => recipe.Images)
             .WithOne(image => image.Recipe)
             .HasForeignKey(image => image.RecipeId);
+
+        builder.HasMany(recipe => recipe.Ingredients)
+            .WithOne(ingredient => ingredient.Recipe)
+            .HasForeignKey(ingredient => ingredient.RecipeId);
+
+        builder.HasMany(recipe => recipe.Steps)
+            .WithOne(step => step.Recipe)
+            .HasForeignKey(step => step.RecipeId);
+
+        builder.HasMany(recipe => recipe.RecipeTags)
+            .WithOne(recipeTag => recipeTag.Recipe)
+            .HasForeignKey(recipeTag => recipeTag.RecipeId);
     }
 }

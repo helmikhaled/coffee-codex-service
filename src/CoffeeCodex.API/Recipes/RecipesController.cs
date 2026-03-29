@@ -1,3 +1,4 @@
+using CoffeeCodex.Application.Recipes.Queries.GetRecipeDetail;
 using CoffeeCodex.Application.Recipes.Queries.GetRecipes;
 using CoffeeCodex.Shared.Pagination;
 using FluentValidation;
@@ -7,7 +8,9 @@ namespace CoffeeCodex.API.Recipes;
 
 [ApiController]
 [Route("recipes")]
-public sealed class RecipesController(IGetRecipesHandler handler) : ControllerBase
+public sealed class RecipesController(
+    IGetRecipesHandler getRecipesHandler,
+    IGetRecipeDetailHandler getRecipeDetailHandler) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(typeof(PagedResponse<RecipeSummaryDto>), StatusCodes.Status200OK)]
@@ -18,7 +21,39 @@ public sealed class RecipesController(IGetRecipesHandler handler) : ControllerBa
     {
         try
         {
-            var response = await handler.HandleAsync(request.ToQuery(), cancellationToken);
+            var response = await getRecipesHandler.HandleAsync(request.ToQuery(), cancellationToken);
+
+            return Ok(response);
+        }
+        catch (ValidationException exception)
+        {
+            foreach (var error in exception.Errors)
+            {
+                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            }
+
+            return ValidationProblem(ModelState);
+        }
+    }
+
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(RecipeDetailDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<RecipeDetailDto>> GetRecipeById(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var response = await getRecipeDetailHandler.HandleAsync(
+                new GetRecipeDetailQuery(id),
+                cancellationToken);
+
+            if (response is null)
+            {
+                return NotFound();
+            }
 
             return Ok(response);
         }

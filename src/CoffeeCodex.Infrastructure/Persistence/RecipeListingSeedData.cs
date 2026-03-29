@@ -18,12 +18,14 @@ internal static class RecipeListingSeedData
         {
             Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
             Name = "Coffee Codex",
+            AvatarUrl = "https://cdn.coffeecodex.dev/authors/coffee-codex.jpg",
         };
 
         var authorB = new Author
         {
             Id = Guid.Parse("22222222-2222-2222-2222-222222222222"),
             Name = "Guest Barista",
+            AvatarUrl = "https://cdn.coffeecodex.dev/authors/guest-barista.jpg",
         };
 
         var espressoTonic = new Recipe
@@ -147,6 +149,16 @@ internal static class RecipeListingSeedData
             },
             new RecipeBrewSpecs
             {
+                RecipeId = matchaCloud.Id,
+                CoffeeDoseInGrams = null,
+                CoffeeYieldInGrams = null,
+                MilkInMl = 150,
+                CupSizeInMl = 300,
+                Difficulty = DifficultyLevel.Beginner,
+                TimeInMinutes = 4,
+            },
+            new RecipeBrewSpecs
+            {
                 RecipeId = affogatoFloat.Id,
                 CoffeeDoseInGrams = 18m,
                 CoffeeYieldInGrams = 36m,
@@ -184,6 +196,309 @@ internal static class RecipeListingSeedData
             },
         };
 
+        var ingredients = new[]
+        {
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000001"),
+                RecipeId = espressoTonic.Id,
+                Name = "Espresso",
+                QuantityValue = 18m,
+                Unit = "g",
+                Position = 1,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000002"),
+                RecipeId = espressoTonic.Id,
+                Name = "Tonic Water",
+                QuantityValue = 120m,
+                Unit = "ml",
+                Position = 2,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000003"),
+                RecipeId = espressoTonic.Id,
+                Name = "Orange Peel",
+                QuantityValue = 1m,
+                Unit = "piece",
+                Position = 3,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000004"),
+                RecipeId = icedMapleLatte.Id,
+                Name = "Espresso",
+                QuantityValue = 18m,
+                Unit = "g",
+                Position = 1,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000005"),
+                RecipeId = icedMapleLatte.Id,
+                Name = "Milk",
+                QuantityValue = 180m,
+                Unit = "ml",
+                Position = 2,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000006"),
+                RecipeId = icedMapleLatte.Id,
+                Name = "Maple Syrup",
+                QuantityValue = 15m,
+                Unit = "ml",
+                Position = 3,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000007"),
+                RecipeId = matchaCloud.Id,
+                Name = "Matcha Powder",
+                QuantityValue = 4m,
+                Unit = "g",
+                Position = 1,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000008"),
+                RecipeId = matchaCloud.Id,
+                Name = "Milk",
+                QuantityValue = 150m,
+                Unit = "ml",
+                Position = 2,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000009"),
+                RecipeId = matchaCloud.Id,
+                Name = "Honey",
+                QuantityValue = 10m,
+                Unit = "ml",
+                Position = 3,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000010"),
+                RecipeId = affogatoFloat.Id,
+                Name = "Espresso",
+                QuantityValue = 18m,
+                Unit = "g",
+                Position = 1,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000011"),
+                RecipeId = affogatoFloat.Id,
+                Name = "Vanilla Ice Cream",
+                QuantityValue = 80m,
+                Unit = "g",
+                Position = 2,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000012"),
+                RecipeId = orangeAmericano.Id,
+                Name = "Espresso",
+                QuantityValue = 18m,
+                Unit = "g",
+                Position = 1,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000013"),
+                RecipeId = orangeAmericano.Id,
+                Name = "Orange Juice",
+                QuantityValue = 90m,
+                Unit = "ml",
+                Position = 2,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000014"),
+                RecipeId = dirtyLatte.Id,
+                Name = "Espresso",
+                QuantityValue = 18m,
+                Unit = "g",
+                Position = 1,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000015"),
+                RecipeId = dirtyLatte.Id,
+                Name = "Cold Milk",
+                QuantityValue = 180m,
+                Unit = "ml",
+                Position = 2,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000016"),
+                RecipeId = espressoShakerato.Id,
+                Name = "Espresso",
+                QuantityValue = 18m,
+                Unit = "g",
+                Position = 1,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000017"),
+                RecipeId = espressoShakerato.Id,
+                Name = "Simple Syrup",
+                QuantityValue = 10m,
+                Unit = "ml",
+                Position = 2,
+            },
+            new RecipeIngredient
+            {
+                Id = Guid.Parse("41000000-0000-0000-0000-000000000018"),
+                RecipeId = espressoShakerato.Id,
+                Name = "Ice",
+                QuantityValue = 120m,
+                Unit = "g",
+                Position = 3,
+            },
+        };
+
+        var steps = new[]
+        {
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000001"),
+                RecipeId = espressoTonic.Id,
+                StepNumber = 1,
+                Instruction = "Fill a tall glass with ice and tonic water.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000002"),
+                RecipeId = espressoTonic.Id,
+                StepNumber = 2,
+                Instruction = "Pull a double espresso shot.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000003"),
+                RecipeId = espressoTonic.Id,
+                StepNumber = 3,
+                Instruction = "Gently pour espresso over tonic and garnish with orange peel.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000004"),
+                RecipeId = icedMapleLatte.Id,
+                StepNumber = 1,
+                Instruction = "Add maple syrup to a glass of ice.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000005"),
+                RecipeId = icedMapleLatte.Id,
+                StepNumber = 2,
+                Instruction = "Pour in cold milk and stir.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000006"),
+                RecipeId = icedMapleLatte.Id,
+                StepNumber = 3,
+                Instruction = "Top with freshly brewed espresso.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000007"),
+                RecipeId = matchaCloud.Id,
+                StepNumber = 1,
+                Instruction = "Whisk matcha powder with a small amount of warm water.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000008"),
+                RecipeId = matchaCloud.Id,
+                StepNumber = 2,
+                Instruction = "Add honey and whisk until smooth.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000009"),
+                RecipeId = matchaCloud.Id,
+                StepNumber = 3,
+                Instruction = "Pour over iced milk.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000010"),
+                RecipeId = affogatoFloat.Id,
+                StepNumber = 1,
+                Instruction = "Place vanilla ice cream in a chilled glass.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000011"),
+                RecipeId = affogatoFloat.Id,
+                StepNumber = 2,
+                Instruction = "Pull a fresh espresso shot.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000012"),
+                RecipeId = affogatoFloat.Id,
+                StepNumber = 3,
+                Instruction = "Pour espresso over the ice cream and serve immediately.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000013"),
+                RecipeId = orangeAmericano.Id,
+                StepNumber = 1,
+                Instruction = "Fill a glass with ice and orange juice.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000014"),
+                RecipeId = orangeAmericano.Id,
+                StepNumber = 2,
+                Instruction = "Add espresso slowly to create a layered effect.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000015"),
+                RecipeId = dirtyLatte.Id,
+                StepNumber = 1,
+                Instruction = "Pour cold milk over ice in a clear glass.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000016"),
+                RecipeId = dirtyLatte.Id,
+                StepNumber = 2,
+                Instruction = "Top with espresso to create distinct layers.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000017"),
+                RecipeId = espressoShakerato.Id,
+                StepNumber = 1,
+                Instruction = "Add espresso, syrup, and ice into a shaker.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000018"),
+                RecipeId = espressoShakerato.Id,
+                StepNumber = 2,
+                Instruction = "Shake vigorously for 15 seconds.",
+            },
+            new RecipeStep
+            {
+                Id = Guid.Parse("42000000-0000-0000-0000-000000000019"),
+                RecipeId = espressoShakerato.Id,
+                StepNumber = 3,
+                Instruction = "Strain into a chilled glass.",
+            },
+        };
+
         var recipeImages = new[]
         {
             new RecipeImage
@@ -199,7 +514,7 @@ internal static class RecipeListingSeedData
             {
                 Id = Guid.Parse("b7a0f4c1-9c45-4a7c-bb2d-5b3e8a1c2f02"),
                 RecipeId = espressoTonic.Id,
-                BlobUrl = "https://plus.unsplash.com/premium_photo-1671559020928-dde18021036f?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                BlobUrl = "https://images.unsplash.com/photo-1609050471053-8636409f9f5b?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 Caption = "Espresso tonic detail",
                 Position = 2,
                 CreatedAt = now,
@@ -269,8 +584,96 @@ internal static class RecipeListingSeedData
             },
         };
 
-        await dbContext.Authors.AddRangeAsync(authorA, authorB);
+        var tags = new[]
+        {
+            new Tag
+            {
+                Id = Guid.Parse("51000000-0000-0000-0000-000000000001"),
+                Name = "citrus",
+            },
+            new Tag
+            {
+                Id = Guid.Parse("51000000-0000-0000-0000-000000000002"),
+                Name = "iced",
+            },
+            new Tag
+            {
+                Id = Guid.Parse("51000000-0000-0000-0000-000000000003"),
+                Name = "sweet",
+            },
+            new Tag
+            {
+                Id = Guid.Parse("51000000-0000-0000-0000-000000000004"),
+                Name = "matcha",
+            },
+            new Tag
+            {
+                Id = Guid.Parse("51000000-0000-0000-0000-000000000005"),
+                Name = "dessert",
+            },
+            new Tag
+            {
+                Id = Guid.Parse("51000000-0000-0000-0000-000000000006"),
+                Name = "sparkling",
+            },
+        };
 
+        var recipeTags = new[]
+        {
+            new RecipeTag
+            {
+                RecipeId = espressoTonic.Id,
+                TagId = Guid.Parse("51000000-0000-0000-0000-000000000001"),
+            },
+            new RecipeTag
+            {
+                RecipeId = espressoTonic.Id,
+                TagId = Guid.Parse("51000000-0000-0000-0000-000000000006"),
+            },
+            new RecipeTag
+            {
+                RecipeId = icedMapleLatte.Id,
+                TagId = Guid.Parse("51000000-0000-0000-0000-000000000002"),
+            },
+            new RecipeTag
+            {
+                RecipeId = icedMapleLatte.Id,
+                TagId = Guid.Parse("51000000-0000-0000-0000-000000000003"),
+            },
+            new RecipeTag
+            {
+                RecipeId = matchaCloud.Id,
+                TagId = Guid.Parse("51000000-0000-0000-0000-000000000002"),
+            },
+            new RecipeTag
+            {
+                RecipeId = matchaCloud.Id,
+                TagId = Guid.Parse("51000000-0000-0000-0000-000000000004"),
+            },
+            new RecipeTag
+            {
+                RecipeId = affogatoFloat.Id,
+                TagId = Guid.Parse("51000000-0000-0000-0000-000000000005"),
+            },
+            new RecipeTag
+            {
+                RecipeId = orangeAmericano.Id,
+                TagId = Guid.Parse("51000000-0000-0000-0000-000000000001"),
+            },
+            new RecipeTag
+            {
+                RecipeId = orangeAmericano.Id,
+                TagId = Guid.Parse("51000000-0000-0000-0000-000000000002"),
+            },
+            new RecipeTag
+            {
+                RecipeId = espressoShakerato.Id,
+                TagId = Guid.Parse("51000000-0000-0000-0000-000000000002"),
+            },
+        };
+
+        await dbContext.Authors.AddRangeAsync(authorA, authorB);
+        await dbContext.Tags.AddRangeAsync(tags);
         await dbContext.Recipes.AddRangeAsync(
             espressoTonic,
             icedMapleLatte,
@@ -278,12 +681,12 @@ internal static class RecipeListingSeedData
             affogatoFloat,
             orangeAmericano,
             dirtyLatte,
-            espressoShakerato
-        );
-
+            espressoShakerato);
         await dbContext.RecipeBrewSpecs.AddRangeAsync(brewSpecs);
+        await dbContext.RecipeIngredients.AddRangeAsync(ingredients);
+        await dbContext.RecipeSteps.AddRangeAsync(steps);
         await dbContext.RecipeImages.AddRangeAsync(recipeImages);
-
+        await dbContext.RecipeTags.AddRangeAsync(recipeTags);
         await dbContext.SaveChangesAsync();
     }
 }

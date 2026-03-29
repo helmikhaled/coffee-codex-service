@@ -26,5 +26,11 @@ public sealed class Recipe
 
     public RecipeBrewSpecs? BrewSpecs { get; set; }
 
+    public ICollection<RecipeIngredient> Ingredients { get; set; } = [];
+
+    public ICollection<RecipeStep> Steps { get; set; } = [];
+
     public ICollection<RecipeImage> Images { get; set; } = [];
+
+    public ICollection<RecipeTag> RecipeTags { get; set; } = [];
 }

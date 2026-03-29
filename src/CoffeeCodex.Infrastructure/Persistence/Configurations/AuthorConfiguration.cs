@@ -20,6 +20,10 @@ internal sealed class AuthorConfiguration : IEntityTypeConfiguration<Author>
             .HasMaxLength(200)
             .IsRequired();
 
+        builder.Property(author => author.AvatarUrl)
+            .HasColumnName("avatar_url")
+            .HasMaxLength(2000);
+
         builder.HasMany(author => author.Recipes)
             .WithOne(recipe => recipe.Author)
             .HasForeignKey(recipe => recipe.AuthorId);

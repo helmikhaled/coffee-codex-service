@@ -4,7 +4,7 @@ Tasks must be executed sequentially.
 
 ---
 
-# Task 1 - Finalize Recipe Detail Contract [ ]
+# Task 1 - Finalize Recipe Detail Contract [x]
 
 Lock the endpoint and payload contract before implementation.
 
@@ -38,7 +38,7 @@ Verify:
 
 ---
 
-# Task 2 - Add Missing Domain Entities [ ]
+# Task 2 - Add Missing Domain Entities [x]
 
 Create domain models needed by recipe detail.
 
@@ -55,7 +55,7 @@ Verify:
 
 ---
 
-# Task 3 - Extend Existing Recipe Domain Relationships [ ]
+# Task 3 - Extend Existing Recipe Domain Relationships [x]
 
 Update current domain entities for detail navigation.
 
@@ -71,7 +71,7 @@ Verify:
 
 ---
 
-# Task 4 - Extend DbContext With Detail DbSets [ ]
+# Task 4 - Extend DbContext With Detail DbSets [x]
 
 Add detail tables to persistence surface.
 
@@ -88,7 +88,7 @@ Verify:
 
 ---
 
-# Task 5 - Configure EF Core Mappings For Detail Tables [ ]
+# Task 5 - Configure EF Core Mappings For Detail Tables [x]
 
 Map new entities to architecture-defined schema.
 
@@ -112,7 +112,7 @@ Verify:
 
 ---
 
-# Task 6 - Add Detail Query Indexes And Schema Support [ ]
+# Task 6 - Add Detail Query Indexes And Schema Support [x]
 
 Add indexes needed for performant detail reads.
 
@@ -129,7 +129,7 @@ Verify:
 
 ---
 
-# Task 7 - Expand Seed Data For Recipe Detail [ ]
+# Task 7 - Expand Seed Data For Recipe Detail [x]
 
 Seed representative data for detail scenarios.
 
@@ -147,7 +147,7 @@ Verify:
 
 ---
 
-# Task 8 - Add Application Query Contracts [ ]
+# Task 8 - Add Application Query Contracts [x]
 
 Create the recipe detail query slice in Application layer.
 
@@ -168,7 +168,7 @@ Verify:
 
 ---
 
-# Task 9 - Add Query Validation And Handler [ ]
+# Task 9 - Add Query Validation And Handler [x]
 
 Implement query execution flow in Application layer.
 
@@ -189,7 +189,7 @@ Verify:
 
 ---
 
-# Task 10 - Register Application And Infrastructure DI [ ]
+# Task 10 - Register Application And Infrastructure DI [x]
 
 Wire all new detail services.
 
@@ -207,7 +207,7 @@ Verify:
 
 ---
 
-# Task 11 - Implement Infrastructure Detail Reader [ ]
+# Task 11 - Implement Infrastructure Detail Reader [x]
 
 Build the EF Core read model projection for recipe detail.
 
@@ -229,7 +229,7 @@ Verify:
 
 ---
 
-# Task 12 - Add GET /recipes/{id} API Action [ ]
+# Task 12 - Add GET /recipes/{id} API Action [x]
 
 Expose detail query from the API layer.
 
@@ -248,7 +248,7 @@ Verify:
 
 ---
 
-# Task 13 - Add Application Tests [ ]
+# Task 13 - Add Application Tests [x]
 
 Add tests for query validation and handler behavior.
 
@@ -265,7 +265,7 @@ Verify:
 
 ---
 
-# Task 14 - Add Infrastructure Reader Tests [ ]
+# Task 14 - Add Infrastructure Reader Tests [x]
 
 Add persistence tests for detail projection correctness.
 
@@ -285,7 +285,7 @@ Verify:
 
 ---
 
-# Task 15 - Add API Integration Tests [ ]
+# Task 15 - Add API Integration Tests [x]
 
 Add endpoint-level tests for contract and status codes.
 
@@ -301,7 +301,7 @@ Verify:
 
 ---
 
-# Task 16 - Run End-To-End Verification [ ]
+# Task 16 - Run End-To-End Verification [x]
 
 Perform final validation for readiness.
 

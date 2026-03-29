@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using CoffeeCodex.Application.Recipes.Queries.GetRecipeDetail;
 using CoffeeCodex.Application.Recipes.Queries.GetRecipes;
 using Microsoft.AspNetCore.Hosting;
 using CoffeeCodex.Infrastructure.Persistence;
@@ -52,6 +53,46 @@ public sealed class RecipesEndpointTest : IClassFixture<RecipeListingApiFactory>
         using var response = await _httpClient.GetAsync("/recipes?page=0&pageSize=2");
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetRecipeById_WhenRecipeExists_ReturnsOk()
+    {
+        using var response = await _httpClient.GetAsync($"/recipes/{RecipeListingTestData.EspressoTonicId}");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetRecipeById_ReturnsDetailPayload()
+    {
+        using var response = await _httpClient.GetAsync($"/recipes/{RecipeListingTestData.EspressoTonicId}");
+        var payload = await response.Content.ReadFromJsonAsync<RecipeDetailDto>(JsonOptions);
+
+        Assert.NotNull(payload);
+        Assert.Equal(RecipeListingTestData.EspressoTonicId, payload.Id);
+        Assert.Equal("espresso-tonic", payload.Slug);
+        Assert.NotNull(payload.Author);
+        Assert.NotEmpty(payload.Ingredients);
+        Assert.NotEmpty(payload.Steps);
+        Assert.NotEmpty(payload.Images);
+        Assert.NotEmpty(payload.Tags);
+    }
+
+    [Fact]
+    public async Task GetRecipeById_WhenRecipeDoesNotExist_ReturnsNotFound()
+    {
+        using var response = await _httpClient.GetAsync($"/recipes/{Guid.NewGuid()}");
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetRecipeById_WhenRouteIdIsInvalid_ReturnsNotFound()
+    {
+        using var response = await _httpClient.GetAsync("/recipes/not-a-guid");
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }
 
