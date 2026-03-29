@@ -4,7 +4,7 @@ Tasks must be executed sequentially.
 
 ---
 
-# Task 1 - Define Listing Contracts [ ]
+# Task 1 - Define Listing Contracts [x]
 
 Finalize the recipe listing contract in code.
 
@@ -22,7 +22,7 @@ Verify:
 
 ---
 
-# Task 2 - Add Recipe Domain Types [ ]
+# Task 2 - Add Recipe Domain Types [x]
 
 Create the minimum domain model required for recipe listing.
 
@@ -46,7 +46,7 @@ Verify:
 
 ---
 
-# Task 3 - Configure EF Core Entities [ ]
+# Task 3 - Configure EF Core Entities [x]
 
 Expand persistence to support recipe listing.
 
@@ -73,7 +73,7 @@ Verify:
 
 ---
 
-# Task 4 - Add Listing Indexes And Schema Support [ ]
+# Task 4 - Add Listing Indexes And Schema Support [x]
 
 Add database support required for performant listing queries.
 
@@ -93,7 +93,7 @@ Verify:
 
 ---
 
-# Task 5 - Prepare Representative Recipe Data [ ]
+# Task 5 - Prepare Representative Recipe Data [x]
 
 Add local data support for exercising the listing endpoint.
 
@@ -112,7 +112,7 @@ Verify:
 
 ---
 
-# Task 6 - Add Application Query Models And Validation [ ]
+# Task 6 - Add Application Query Models And Validation [x]
 
 Create the application-layer recipe listing use case.
 
@@ -134,7 +134,7 @@ Verify:
 
 ---
 
-# Task 7 - Add Listing Read Abstraction And Registration [ ]
+# Task 7 - Add Listing Read Abstraction And Registration [x]
 
 Introduce the application-to-infrastructure boundary for recipe listing reads.
 
@@ -150,7 +150,7 @@ Verify:
 
 ---
 
-# Task 8 - Implement The Listing Query [ ]
+# Task 8 - Implement The Listing Query [x]
 
 Implement the optimized EF Core query for recipe summaries.
 
@@ -172,7 +172,7 @@ Verify:
 
 ---
 
-# Task 9 - Expose GET /recipes [ ]
+# Task 9 - Expose GET /recipes [x]
 
 Add the public API endpoint for recipe listing.
 
@@ -190,7 +190,7 @@ Verify:
 
 ---
 
-# Task 10 - Register Endpoint And Finalize API Wiring [ ]
+# Task 10 - Register Endpoint And Finalize API Wiring [x]
 
 Integrate the new recipe endpoint into the API startup path.
 
@@ -205,7 +205,7 @@ Verify:
 
 ---
 
-# Task 11 - Add Automated Tests [ ]
+# Task 11 - Add Automated Tests [x]
 
 Create coverage for the recipe listing slice.
 
@@ -227,7 +227,7 @@ Verify:
 
 ---
 
-# Task 12 - Run Manual Verification [ ]
+# Task 12 - Run Manual Verification [x]
 
 Perform a final smoke check against the running API.
 

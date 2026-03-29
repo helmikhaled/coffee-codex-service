@@ -1,0 +1,11 @@
+.git
+.gitignore
+.dotnet
+.vs
+.vscode
+.idea
+**/bin
+**/obj
+**/TestResults
+tests
+docs

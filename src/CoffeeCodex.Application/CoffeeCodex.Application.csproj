@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CoffeeCodex.Domain\CoffeeCodex.Domain.csproj" />
+    <ProjectReference Include="..\CoffeeCodex.Shared\CoffeeCodex.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

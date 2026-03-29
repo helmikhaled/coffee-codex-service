@@ -6,4 +6,7 @@
     <Project Path="src/CoffeeCodex.Infrastructure/CoffeeCodex.Infrastructure.csproj" />
     <Project Path="src/CoffeeCodex.Shared/CoffeeCodex.Shared.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CoffeeCodex.RecipeListing.Tests/CoffeeCodex.RecipeListing.Tests.csproj" />
+  </Folder>
 </Solution>
