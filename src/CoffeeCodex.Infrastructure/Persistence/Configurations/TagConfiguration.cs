@@ -20,6 +20,9 @@ internal sealed class TagConfiguration : IEntityTypeConfiguration<Tag>
             .HasMaxLength(100)
             .IsRequired();
 
+        builder.HasIndex(tag => tag.Name)
+            .HasDatabaseName("ix_tags_name");
+
         builder.HasMany(tag => tag.RecipeTags)
             .WithOne(recipeTag => recipeTag.Tag)
             .HasForeignKey(recipeTag => recipeTag.TagId);

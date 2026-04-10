@@ -13,6 +13,25 @@ internal sealed class RecipeSummaryReader(CoffeeCodexDbContext dbContext) : IRec
         CancellationToken cancellationToken = default)
     {
         var baseQuery = dbContext.Recipes.AsNoTracking();
+
+        if (query.Category is not null)
+        {
+            var category = Enum.Parse<RecipeCategory>(query.Category, ignoreCase: false);
+            baseQuery = baseQuery.Where(recipe => recipe.Category == category);
+        }
+
+        var normalizedTags = query.Tags?
+            .Where(tag => !string.IsNullOrWhiteSpace(tag))
+            .Select(tag => tag.Trim())
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+
+        if (normalizedTags is { Length: > 0 })
+        {
+            baseQuery = baseQuery.Where(recipe =>
+                recipe.RecipeTags.Any(recipeTag => normalizedTags.Contains(recipeTag.Tag.Name)));
+        }
+
         var totalCount = await baseQuery.CountAsync(cancellationToken);
         var skip = (query.Page - 1) * query.PageSize;
 

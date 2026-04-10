@@ -23,6 +23,9 @@ internal sealed class RecipeTagConfiguration : IEntityTypeConfiguration<RecipeTa
         builder.HasIndex(recipeTag => new { recipeTag.RecipeId, recipeTag.TagId })
             .HasDatabaseName("ix_recipe_tags_recipe_id_tag_id");
 
+        builder.HasIndex(recipeTag => new { recipeTag.TagId, recipeTag.RecipeId })
+            .HasDatabaseName("ix_recipe_tags_tag_id_recipe_id");
+
         builder.HasOne(recipeTag => recipeTag.Recipe)
             .WithMany(recipe => recipe.RecipeTags)
             .HasForeignKey(recipeTag => recipeTag.RecipeId);

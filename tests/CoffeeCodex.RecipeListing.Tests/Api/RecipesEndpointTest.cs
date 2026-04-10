@@ -56,6 +56,68 @@ public sealed class RecipesEndpointTest : IClassFixture<RecipeListingApiFactory>
     }
 
     [Fact]
+    public async Task GetRecipes_WhenFilteredByCategory_ReturnsMatchingRecipes()
+    {
+        using var response = await _httpClient.GetAsync("/recipes?category=Modern&page=1&pageSize=12");
+        var payload = await response.Content.ReadFromJsonAsync<PagedResponse<RecipeSummaryDto>>(JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(payload);
+        Assert.Equal(1, payload.TotalCount);
+        Assert.Single(payload.Items);
+        Assert.Equal("matcha-cloud", payload.Items[0].Slug);
+    }
+
+    [Fact]
+    public async Task GetRecipes_WhenCategoryCasingIsInvalid_ReturnsBadRequest()
+    {
+        using var response = await _httpClient.GetAsync("/recipes?category=modern&page=1&pageSize=12");
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetRecipes_WhenFilteredByTag_ReturnsMatchingRecipes()
+    {
+        using var response = await _httpClient.GetAsync("/recipes?tag=matcha&page=1&pageSize=12");
+        var payload = await response.Content.ReadFromJsonAsync<PagedResponse<RecipeSummaryDto>>(JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(payload);
+        Assert.Equal(1, payload.TotalCount);
+        Assert.Single(payload.Items);
+        Assert.Equal("matcha-cloud", payload.Items[0].Slug);
+    }
+
+    [Fact]
+    public async Task GetRecipes_WhenFilteredByMultipleTags_UsesOrSemantics()
+    {
+        using var response = await _httpClient.GetAsync("/recipes?tag=matcha&tag=iced&page=1&pageSize=12");
+        var payload = await response.Content.ReadFromJsonAsync<PagedResponse<RecipeSummaryDto>>(JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(payload);
+        Assert.Equal(2, payload.TotalCount);
+        Assert.Collection(
+            payload.Items,
+            item => Assert.Equal("iced-maple-latte", item.Slug),
+            item => Assert.Equal("matcha-cloud", item.Slug));
+    }
+
+    [Fact]
+    public async Task GetRecipes_WhenCategoryAndTagAreCombined_ReturnsMatchingRecipes()
+    {
+        using var response = await _httpClient.GetAsync("/recipes?category=Modern&tag=matcha&page=1&pageSize=12");
+        var payload = await response.Content.ReadFromJsonAsync<PagedResponse<RecipeSummaryDto>>(JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(payload);
+        Assert.Equal(1, payload.TotalCount);
+        Assert.Single(payload.Items);
+        Assert.Equal("matcha-cloud", payload.Items[0].Slug);
+    }
+
+    [Fact]
     public async Task GetRecipeById_WhenRecipeExists_ReturnsOk()
     {
         using var response = await _httpClient.GetAsync($"/recipes/{RecipeListingTestData.EspressoTonicId}");

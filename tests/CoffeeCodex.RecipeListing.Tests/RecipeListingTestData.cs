@@ -283,6 +283,11 @@ internal static class RecipeListingTestData
                 Id = Guid.Parse("40000000-0000-0000-0000-000000000004"),
                 Name = "sparkling",
             },
+            new Tag
+            {
+                Id = Guid.Parse("40000000-0000-0000-0000-000000000005"),
+                Name = "matcha",
+            },
         };
 
         var recipeTags = new[]
@@ -306,6 +311,11 @@ internal static class RecipeListingTestData
             {
                 RecipeId = affogatoFloat.Id,
                 TagId = Guid.Parse("40000000-0000-0000-0000-000000000003"),
+            },
+            new RecipeTag
+            {
+                RecipeId = matchaCloud.Id,
+                TagId = Guid.Parse("40000000-0000-0000-0000-000000000005"),
             },
         };
 

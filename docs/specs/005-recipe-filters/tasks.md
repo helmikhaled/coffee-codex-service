@@ -4,7 +4,7 @@ Tasks must be executed sequentially.
 
 ---
 
-# Task 1 - Finalize Filter Semantics [ ]
+# Task 1 - Finalize Filter Semantics [x]
 
 Lock filtering behavior before implementation.
 
@@ -23,7 +23,7 @@ Verify:
 
 ---
 
-# Task 2 - Extend Listing Request Contract [ ]
+# Task 2 - Extend Listing Request Contract [x]
 
 Update API request model for filter inputs.
 
@@ -39,7 +39,7 @@ Verify:
 
 ---
 
-# Task 3 - Extend Application Query Contract [ ]
+# Task 3 - Extend Application Query Contract [x]
 
 Carry filter inputs into the application use case.
 
@@ -55,7 +55,7 @@ Verify:
 
 ---
 
-# Task 4 - Add Filter Validation Rules [ ]
+# Task 4 - Add Filter Validation Rules [x]
 
 Extend listing query validation while preserving existing pagination validation.
 
@@ -72,7 +72,7 @@ Verify:
 
 ---
 
-# Task 5 - Wire Request-To-Query Mapping [ ]
+# Task 5 - Wire Request-To-Query Mapping [x]
 
 Ensure API mapping produces the correct application query payload.
 
@@ -87,7 +87,7 @@ Verify:
 
 ---
 
-# Task 6 - Implement Category Filter In Reader [ ]
+# Task 6 - Implement Category Filter In Reader [x]
 
 Apply category filter in infrastructure listing query.
 
@@ -102,7 +102,7 @@ Verify:
 
 ---
 
-# Task 7 - Implement Tag Filter In Reader [ ]
+# Task 7 - Implement Tag Filter In Reader [x]
 
 Apply tag filtering using recipe-tag relationships.
 
@@ -118,7 +118,7 @@ Verify:
 
 ---
 
-# Task 8 - Preserve Listing Behavior With Filters [ ]
+# Task 8 - Preserve Listing Behavior With Filters [x]
 
 Ensure filtered and unfiltered listing retain existing behavior.
 
@@ -135,7 +135,7 @@ Verify:
 
 ---
 
-# Task 9 - Add/Adjust Filter Indexes [ ]
+# Task 9 - Add/Adjust Filter Indexes [x]
 
 Harden persistence for filter performance.
 
@@ -151,7 +151,7 @@ Verify:
 
 ---
 
-# Task 10 - Add Migration For Schema/Index Changes [ ]
+# Task 10 - Add Migration For Schema/Index Changes [x]
 
 Persist any index/schema updates introduced by Task 9.
 
@@ -166,7 +166,7 @@ Verify:
 
 ---
 
-# Task 11 - Finalize API Endpoint Contract Metadata [ ]
+# Task 11 - Finalize API Endpoint Contract Metadata [x]
 
 Keep API surface consistent for filtered listing.
 
@@ -182,7 +182,7 @@ Verify:
 
 ---
 
-# Task 12 - Add Application Validation Tests [ ]
+# Task 12 - Add Application Validation Tests [x]
 
 Protect filter validation behavior.
 
@@ -199,7 +199,7 @@ Verify:
 
 ---
 
-# Task 13 - Add Infrastructure Reader Tests [ ]
+# Task 13 - Add Infrastructure Reader Tests [x]
 
 Protect filtered query behavior at read-model level.
 
@@ -219,7 +219,7 @@ Verify:
 
 ---
 
-# Task 14 - Add API Integration Tests [ ]
+# Task 14 - Add API Integration Tests [x]
 
 Protect end-to-end filter behavior.
 
@@ -238,7 +238,7 @@ Verify:
 
 ---
 
-# Task 15 - Run Automated Test Suite [ ]
+# Task 15 - Run Automated Test Suite [x]
 
 Run target test projects after implementation.
 
@@ -254,7 +254,7 @@ Verify:
 
 ---
 
-# Task 16 - Run Manual And Performance Verification [ ]
+# Task 16 - Run Manual And Performance Verification [x]
 
 Perform final runtime verification.
 
