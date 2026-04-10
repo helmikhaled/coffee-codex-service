@@ -69,7 +69,8 @@ internal sealed class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
 
         builder.HasMany(recipe => recipe.Images)
             .WithOne(image => image.Recipe)
-            .HasForeignKey(image => image.RecipeId);
+            .HasForeignKey(image => image.RecipeId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(recipe => recipe.Ingredients)
             .WithOne(ingredient => ingredient.Recipe)

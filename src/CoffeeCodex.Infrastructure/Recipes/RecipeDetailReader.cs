@@ -50,6 +50,7 @@ internal sealed class RecipeDetailReader(CoffeeCodexDbContext dbContext) : IReci
                     .ToList(),
                 recipe.Images
                     .OrderBy(image => image.Position)
+                    .ThenBy(image => image.Id)
                     .Select(image => new ImageDto(
                         image.BlobUrl,
                         image.Caption,

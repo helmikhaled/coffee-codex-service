@@ -68,6 +68,35 @@ public sealed class RecipeDetailReaderTest
     }
 
     [Fact]
+    public async Task GetRecipeDetailAsync_WhenRecipeHasNoImages_ReturnsEmptyImageList()
+    {
+        await using var dbContext = CreateDbContext();
+        await RecipeListingTestData.SeedAsync(dbContext);
+        var reader = new RecipeDetailReader(dbContext);
+
+        var result = await reader.GetRecipeDetailAsync(
+            new GetRecipeDetailQuery(RecipeListingTestData.MatchaCloudId));
+
+        Assert.NotNull(result);
+        Assert.Empty(result.Images);
+    }
+
+    [Fact]
+    public async Task GetRecipeDetailAsync_PreservesNullImageCaption()
+    {
+        await using var dbContext = CreateDbContext();
+        await RecipeListingTestData.SeedAsync(dbContext);
+        var reader = new RecipeDetailReader(dbContext);
+
+        var result = await reader.GetRecipeDetailAsync(
+            new GetRecipeDetailQuery(RecipeListingTestData.IcedMapleLatteId));
+
+        Assert.NotNull(result);
+        Assert.Single(result.Images);
+        Assert.Null(result.Images[0].Caption);
+    }
+
+    [Fact]
     public async Task GetRecipeDetailAsync_WhenRecipeDoesNotExist_ReturnsNull()
     {
         await using var dbContext = CreateDbContext();

@@ -560,16 +560,7 @@ internal static class RecipeListingSeedData
                 Id = Guid.Parse("f6c3a2b1-7d4e-4e9f-b8c1-3a2d5e6f7b07"),
                 RecipeId = orangeAmericano.Id,
                 BlobUrl = "https://plus.unsplash.com/premium_photo-1671559020931-c103ecf61a13?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                Caption = "Orange espresso",
-                Position = 1,
-                CreatedAt = now,
-            },
-            new RecipeImage
-            {
-                Id = Guid.Parse("a7d4e5f6-1b2c-4a8f-9c3d-4e5f6a7b8c08"),
-                RecipeId = dirtyLatte.Id,
-                BlobUrl = "https://images.unsplash.com/photo-1598778124054-f9548b4d5e4c?q=80&w=1178&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                Caption = "Dirty latte layered",
+                Caption = null,
                 Position = 1,
                 CreatedAt = now,
             },

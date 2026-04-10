@@ -246,7 +246,7 @@ internal static class RecipeListingTestData
                 Id = Guid.Parse("10000000-0000-0000-0000-000000000003"),
                 RecipeId = icedMapleLatte.Id,
                 BlobUrl = "https://cdn.example.com/recipes/iced-maple-latte-thumb.jpg",
-                Caption = "Iced maple latte thumbnail",
+                Caption = null,
                 Position = 1,
                 CreatedAt = now,
             },

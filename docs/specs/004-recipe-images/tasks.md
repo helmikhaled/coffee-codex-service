@@ -4,7 +4,7 @@ Tasks must be executed sequentially.
 
 ---
 
-# Task 1 - Finalize Image Contract Semantics [ ]
+# Task 1 - Finalize Image Contract Semantics [x]
 
 Lock the image contract decisions before code changes.
 
@@ -22,7 +22,7 @@ Verify:
 
 ---
 
-# Task 2 - Define Image Constraints For Future Writes [ ]
+# Task 2 - Define Image Constraints For Future Writes [x]
 
 Set reusable image rules now so later upload work (Spec 011) does not duplicate logic.
 
@@ -38,7 +38,7 @@ Verify:
 
 ---
 
-# Task 3 - Align Domain Model For Recipe Images [ ]
+# Task 3 - Align Domain Model For Recipe Images [x]
 
 Ensure domain entities reflect the finalized image contract and constraints.
 
@@ -54,7 +54,7 @@ Verify:
 
 ---
 
-# Task 4 - Align Recipe Detail DTO Image Shape [ ]
+# Task 4 - Align Recipe Detail DTO Image Shape [x]
 
 Ensure application-level detail DTOs expose the finalized image contract.
 
@@ -69,7 +69,7 @@ Verify:
 
 ---
 
-# Task 5 - Enforce Recipe Image Schema Constraints [ ]
+# Task 5 - Enforce Recipe Image Schema Constraints [x]
 
 Apply persistence rules that protect image ordering and data integrity.
 
@@ -90,7 +90,7 @@ Verify:
 
 ---
 
-# Task 6 - Add Or Update EF Core Migration [ ]
+# Task 6 - Add Or Update EF Core Migration [x]
 
 Persist schema changes introduced by Task 5.
 
@@ -105,7 +105,7 @@ Verify:
 
 ---
 
-# Task 7 - Expand Seed Data For Image Scenarios [ ]
+# Task 7 - Expand Seed Data For Image Scenarios [x]
 
 Ensure local and test data covers required image behaviors.
 
@@ -122,7 +122,7 @@ Verify:
 
 ---
 
-# Task 8 - Implement Deterministic Image Projection In Detail Reader [ ]
+# Task 8 - Implement Deterministic Image Projection In Detail Reader [x]
 
 Make recipe detail retrieval return correctly ordered image metadata.
 
@@ -140,7 +140,7 @@ Verify:
 
 ---
 
-# Task 9 - Keep API Detail Surface Aligned [ ]
+# Task 9 - Keep API Detail Surface Aligned [x]
 
 Ensure the public endpoint continues to expose the correct image payload.
 
@@ -156,7 +156,7 @@ Verify:
 
 ---
 
-# Task 10 - Add Infrastructure Tests For Image Retrieval [ ]
+# Task 10 - Add Infrastructure Tests For Image Retrieval [x]
 
 Protect image query behavior at the reader level.
 
@@ -173,7 +173,7 @@ Verify:
 
 ---
 
-# Task 11 - Add Persistence Constraint Tests [ ]
+# Task 11 - Add Persistence Constraint Tests [x]
 
 Protect schema-level guarantees introduced for image metadata.
 
@@ -188,7 +188,7 @@ Verify:
 
 ---
 
-# Task 12 - Add API Integration Tests For Image Contract [ ]
+# Task 12 - Add API Integration Tests For Image Contract [x]
 
 Protect end-to-end HTTP contract behavior for recipe images.
 
@@ -204,7 +204,7 @@ Verify:
 
 ---
 
-# Task 13 - Run Focused Automated Test Suite [ ]
+# Task 13 - Run Focused Automated Test Suite [x]
 
 Run and validate all tests impacted by this feature.
 
@@ -219,7 +219,7 @@ Verify:
 
 ---
 
-# Task 14 - Run Manual API Smoke Checks [ ]
+# Task 14 - Run Manual API Smoke Checks [x]
 
 Confirm runtime behavior with seeded data.
 
@@ -235,7 +235,7 @@ Verify:
 
 ---
 
-# Task 15 - Validate Performance And Observability [ ]
+# Task 15 - Validate Performance And Observability [x]
 
 Confirm non-functional requirements from PRD and plan.
 

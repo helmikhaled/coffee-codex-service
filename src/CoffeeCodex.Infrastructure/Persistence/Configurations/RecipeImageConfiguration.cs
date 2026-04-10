@@ -8,7 +8,12 @@ internal sealed class RecipeImageConfiguration : IEntityTypeConfiguration<Recipe
 {
     public void Configure(EntityTypeBuilder<RecipeImage> builder)
     {
-        builder.ToTable("recipe_images");
+        builder.ToTable("recipe_images", tableBuilder =>
+        {
+            tableBuilder.HasCheckConstraint(
+                "ck_recipe_images_position_gte_1",
+                $"position >= {RecipeImageConstraints.MinPosition}");
+        });
 
         builder.HasKey(image => image.Id);
 
@@ -37,6 +42,7 @@ internal sealed class RecipeImageConfiguration : IEntityTypeConfiguration<Recipe
             .IsRequired();
 
         builder.HasIndex(image => new { image.RecipeId, image.Position })
+            .IsUnique()
             .HasDatabaseName("ix_recipe_images_recipe_id_position");
     }
 }

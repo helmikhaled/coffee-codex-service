@@ -80,6 +80,41 @@ public sealed class RecipesEndpointTest : IClassFixture<RecipeListingApiFactory>
     }
 
     [Fact]
+    public async Task GetRecipeById_ImagesAreReturnedInPositionOrder()
+    {
+        using var response = await _httpClient.GetAsync($"/recipes/{RecipeListingTestData.EspressoTonicId}");
+        var payload = await response.Content.ReadFromJsonAsync<RecipeDetailDto>(JsonOptions);
+
+        Assert.NotNull(payload);
+        Assert.Equal([1, 2], payload.Images.Select(image => image.Position).ToArray());
+    }
+
+    [Fact]
+    public async Task GetRecipeById_ImagePayloadIncludesUrlCaptionAndPosition()
+    {
+        using var response = await _httpClient.GetAsync($"/recipes/{RecipeListingTestData.EspressoTonicId}");
+        var payload = await response.Content.ReadFromJsonAsync<RecipeDetailDto>(JsonOptions);
+
+        Assert.NotNull(payload);
+        Assert.NotEmpty(payload.Images);
+        Assert.All(payload.Images, image =>
+        {
+            Assert.False(string.IsNullOrWhiteSpace(image.Url));
+            Assert.True(image.Position >= 1);
+        });
+    }
+
+    [Fact]
+    public async Task GetRecipeById_WhenRecipeHasNoImages_ReturnsEmptyImagesArray()
+    {
+        using var response = await _httpClient.GetAsync($"/recipes/{RecipeListingTestData.MatchaCloudId}");
+        var payload = await response.Content.ReadFromJsonAsync<RecipeDetailDto>(JsonOptions);
+
+        Assert.NotNull(payload);
+        Assert.Empty(payload.Images);
+    }
+
+    [Fact]
     public async Task GetRecipeById_WhenRecipeDoesNotExist_ReturnsNotFound()
     {
         using var response = await _httpClient.GetAsync($"/recipes/{Guid.NewGuid()}");
