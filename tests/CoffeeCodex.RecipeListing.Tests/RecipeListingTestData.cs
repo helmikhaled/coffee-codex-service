@@ -171,6 +171,15 @@ internal static class RecipeListingTestData
             },
             new RecipeIngredient
             {
+                Id = Guid.Parse("20000000-0000-0000-0000-000000000007"),
+                RecipeId = icedMapleLatte.Id,
+                Name = "Matcha Foam",
+                QuantityValue = 8m,
+                Unit = "g",
+                Position = 3,
+            },
+            new RecipeIngredient
+            {
                 Id = Guid.Parse("20000000-0000-0000-0000-000000000005"),
                 RecipeId = matchaCloud.Id,
                 Name = "Matcha Powder",

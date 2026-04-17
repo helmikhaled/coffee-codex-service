@@ -22,5 +22,11 @@ public sealed class GetRecipesQueryValidator : AbstractValidator<GetRecipesQuery
         RuleForEach(query => query.Tags)
             .Must(tag => !string.IsNullOrWhiteSpace(tag))
             .WithMessage("Tag values must not be empty.");
+
+        RuleFor(query => query.Search)
+            .Must(search => search is null
+                || search.Trim().Length <= RecipeListingDefaults.MaxSearchLength)
+            .WithMessage(
+                $"Search must be at most {RecipeListingDefaults.MaxSearchLength} characters.");
     }
 }

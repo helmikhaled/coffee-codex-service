@@ -3,6 +3,7 @@ using System;
 using CoffeeCodex.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CoffeeCodex.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(CoffeeCodexDbContext))]
-    partial class CoffeeCodexDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260417133935_RestoreTagFilterIndex")]
+    partial class RestoreTagFilterIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

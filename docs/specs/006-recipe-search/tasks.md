@@ -4,7 +4,7 @@ Tasks must be executed sequentially.
 
 ---
 
-# Task 1 - Finalize Search Semantics [ ]
+# Task 1 - Finalize Search Semantics [x]
 
 Lock search behavior before code changes.
 
@@ -25,7 +25,7 @@ Verify:
 
 ---
 
-# Task 2 - Extend API Listing Request Contract [ ]
+# Task 2 - Extend API Listing Request Contract [x]
 
 Add search input to the HTTP request model.
 
@@ -40,7 +40,7 @@ Verify:
 
 ---
 
-# Task 3 - Add Request-To-Query Search Mapping [ ]
+# Task 3 - Add Request-To-Query Search Mapping [x]
 
 Pass and normalize `search` from API to Application query object.
 
@@ -56,7 +56,7 @@ Verify:
 
 ---
 
-# Task 4 - Extend Application Query Contract [ ]
+# Task 4 - Extend Application Query Contract [x]
 
 Carry search criteria through the use-case contract.
 
@@ -71,7 +71,7 @@ Verify:
 
 ---
 
-# Task 5 - Add Search Validation Limits [ ]
+# Task 5 - Add Search Validation Limits [x]
 
 Define reusable search input limits in listing defaults.
 
@@ -85,7 +85,7 @@ Verify:
 
 ---
 
-# Task 6 - Add Search Validation Rules [ ]
+# Task 6 - Add Search Validation Rules [x]
 
 Extend `GetRecipesQueryValidator` for search input.
 
@@ -101,7 +101,7 @@ Verify:
 
 ---
 
-# Task 7 - Implement Title Search Predicate [ ]
+# Task 7 - Implement Title Search Predicate [x]
 
 Add title keyword matching in `RecipeSummaryReader`.
 
@@ -116,7 +116,7 @@ Verify:
 
 ---
 
-# Task 8 - Implement Tag Search Predicate [ ]
+# Task 8 - Implement Tag Search Predicate [x]
 
 Extend search to tag names in `RecipeSummaryReader`.
 
@@ -131,7 +131,7 @@ Verify:
 
 ---
 
-# Task 9 - Implement Ingredient Search Predicate [ ]
+# Task 9 - Implement Ingredient Search Predicate [x]
 
 Extend search to ingredient names in `RecipeSummaryReader`.
 
@@ -146,7 +146,7 @@ Verify:
 
 ---
 
-# Task 10 - Compose Search With Existing Filters [ ]
+# Task 10 - Compose Search With Existing Filters [x]
 
 Integrate search with current category and tag filters.
 
@@ -161,7 +161,7 @@ Verify:
 
 ---
 
-# Task 11 - Add Title-Priority Ordering Tier [ ]
+# Task 11 - Add Title-Priority Ordering Tier [x]
 
 Apply lightweight ranking while preserving curated ordering.
 
@@ -177,7 +177,7 @@ Verify:
 
 ---
 
-# Task 12 - Preserve Paging And Count Semantics [ ]
+# Task 12 - Preserve Paging And Count Semantics [x]
 
 Ensure search path keeps listing contract guarantees.
 
@@ -193,7 +193,7 @@ Verify:
 
 ---
 
-# Task 13 - Add PostgreSQL Search Index Configuration [ ]
+# Task 13 - Add PostgreSQL Search Index Configuration [x]
 
 Add DB support to reduce risk of search-related full table scans.
 
@@ -210,7 +210,7 @@ Verify:
 
 ---
 
-# Task 14 - Add EF Core Migration For Search Indexes [ ]
+# Task 14 - Add EF Core Migration For Search Indexes [x]
 
 Persist schema/index changes introduced in Task 13.
 
@@ -225,7 +225,7 @@ Verify:
 
 ---
 
-# Task 15 - Add Application Validation Tests [ ]
+# Task 15 - Add Application Validation Tests [x]
 
 Protect query validation behavior for the new search contract.
 
@@ -242,7 +242,7 @@ Verify:
 
 ---
 
-# Task 16 - Add Infrastructure Search Query Tests [ ]
+# Task 16 - Add Infrastructure Search Query Tests [x]
 
 Protect reader-level search behavior and ordering.
 
@@ -264,7 +264,7 @@ Verify:
 
 ---
 
-# Task 17 - Add API Integration Tests For Search [ ]
+# Task 17 - Add API Integration Tests For Search [x]
 
 Protect end-to-end HTTP behavior for search.
 
@@ -283,7 +283,7 @@ Verify:
 
 ---
 
-# Task 18 - Finalize API Metadata For Search [ ]
+# Task 18 - Finalize API Metadata For Search [x]
 
 Ensure public API contract documentation includes search.
 
@@ -298,7 +298,7 @@ Verify:
 
 ---
 
-# Task 19 - Run Automated Test Verification [ ]
+# Task 19 - Run Automated Test Verification [x]
 
 Run relevant test suites after implementation.
 
@@ -314,7 +314,7 @@ Verify:
 
 ---
 
-# Task 20 - Run Manual Performance And Observability Checks [ ]
+# Task 20 - Run Manual Performance And Observability Checks [x]
 
 Perform final runtime validation for search readiness.
 

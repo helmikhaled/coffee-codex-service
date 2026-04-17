@@ -54,4 +54,40 @@ public sealed class GetRecipesQueryValidatorTest
             result.Errors,
             error => error.PropertyName.StartsWith(nameof(GetRecipesQuery.Tags), StringComparison.Ordinal));
     }
+
+    [Fact]
+    public void Validate_WhenSearchExceedsMaxLength_ReturnsError()
+    {
+        var overMaxSearch = new string('a', RecipeListingDefaults.MaxSearchLength + 1);
+
+        var result = _validator.Validate(new GetRecipesQuery(
+            Page: 1,
+            PageSize: 12,
+            Search: overMaxSearch));
+
+        Assert.False(result.IsValid);
+        Assert.Contains(result.Errors, error => error.PropertyName == nameof(GetRecipesQuery.Search));
+    }
+
+    [Fact]
+    public void Validate_WhenSearchIsNull_PassesValidation()
+    {
+        var result = _validator.Validate(new GetRecipesQuery(
+            Page: 1,
+            PageSize: 12,
+            Search: null));
+
+        Assert.True(result.IsValid);
+    }
+
+    [Fact]
+    public void Validate_WhenSearchIsWhitespace_PassesValidation()
+    {
+        var result = _validator.Validate(new GetRecipesQuery(
+            Page: 1,
+            PageSize: 12,
+            Search: "   "));
+
+        Assert.True(result.IsValid);
+    }
 }

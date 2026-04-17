@@ -62,6 +62,11 @@ internal sealed class RecipeConfiguration : IEntityTypeConfiguration<Recipe>
         builder.HasIndex(recipe => recipe.Category)
             .HasDatabaseName("ix_recipes_category");
 
+        builder.HasIndex(recipe => recipe.Title)
+            .HasDatabaseName("ix_recipes_title_trgm")
+            .HasMethod("gin")
+            .HasOperators("gin_trgm_ops");
+
         builder.HasOne(recipe => recipe.Author)
             .WithMany(author => author.Recipes)
             .HasForeignKey(recipe => recipe.AuthorId);

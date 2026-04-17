@@ -41,6 +41,11 @@ internal sealed class RecipeIngredientConfiguration : IEntityTypeConfiguration<R
         builder.HasIndex(ingredient => new { ingredient.RecipeId, ingredient.Position })
             .HasDatabaseName("ix_recipe_ingredients_recipe_id_position");
 
+        builder.HasIndex(ingredient => ingredient.Name)
+            .HasDatabaseName("ix_recipe_ingredients_name_trgm")
+            .HasMethod("gin")
+            .HasOperators("gin_trgm_ops");
+
         builder.HasOne(ingredient => ingredient.Recipe)
             .WithMany(recipe => recipe.Ingredients)
             .HasForeignKey(ingredient => ingredient.RecipeId);

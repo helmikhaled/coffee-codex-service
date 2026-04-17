@@ -25,6 +25,8 @@ public sealed class CoffeeCodexDbContext(DbContextOptions<CoffeeCodexDbContext> 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasPostgresExtension("pg_trgm");
+
         modelBuilder.ApplyConfiguration(new AuthorConfiguration());
         modelBuilder.ApplyConfiguration(new RecipeConfiguration());
         modelBuilder.ApplyConfiguration(new RecipeBrewSpecsConfiguration());

@@ -184,6 +184,164 @@ public sealed class RecipeSummaryReaderTest
         Assert.Empty(response.Items);
     }
 
+    [Fact]
+    public async Task GetRecipesAsync_WhenSearchMatchesTitle_ReturnsMatchingRecipes()
+    {
+        await using var dbContext = CreateDbContext();
+        await RecipeListingTestData.SeedAsync(dbContext);
+        var reader = new RecipeSummaryReader(dbContext);
+
+        var response = await reader.GetRecipesAsync(new GetRecipesQuery(
+            Page: 1,
+            PageSize: 12,
+            Search: "affogato"));
+
+        Assert.Equal(1, response.TotalCount);
+        Assert.Single(response.Items);
+        Assert.Equal("affogato-float", response.Items[0].Slug);
+    }
+
+    [Fact]
+    public async Task GetRecipesAsync_WhenSearchMatchesTag_ReturnsMatchingRecipes()
+    {
+        await using var dbContext = CreateDbContext();
+        await RecipeListingTestData.SeedAsync(dbContext);
+        var reader = new RecipeSummaryReader(dbContext);
+
+        var response = await reader.GetRecipesAsync(new GetRecipesQuery(
+            Page: 1,
+            PageSize: 12,
+            Search: "sparkling"));
+
+        Assert.Equal(1, response.TotalCount);
+        Assert.Single(response.Items);
+        Assert.Equal("espresso-tonic", response.Items[0].Slug);
+    }
+
+    [Fact]
+    public async Task GetRecipesAsync_WhenSearchMatchesIngredient_ReturnsMatchingRecipes()
+    {
+        await using var dbContext = CreateDbContext();
+        await RecipeListingTestData.SeedAsync(dbContext);
+        var reader = new RecipeSummaryReader(dbContext);
+
+        var response = await reader.GetRecipesAsync(new GetRecipesQuery(
+            Page: 1,
+            PageSize: 12,
+            Search: "maple syrup"));
+
+        Assert.Equal(1, response.TotalCount);
+        Assert.Single(response.Items);
+        Assert.Equal("iced-maple-latte", response.Items[0].Slug);
+    }
+
+    [Fact]
+    public async Task GetRecipesAsync_WhenSearchIsCaseInsensitive_ReturnsMatchingRecipes()
+    {
+        await using var dbContext = CreateDbContext();
+        await RecipeListingTestData.SeedAsync(dbContext);
+        var reader = new RecipeSummaryReader(dbContext);
+
+        var response = await reader.GetRecipesAsync(new GetRecipesQuery(
+            Page: 1,
+            PageSize: 12,
+            Search: "MaTcHa"));
+
+        Assert.Equal(2, response.TotalCount);
+        Assert.Collection(
+            response.Items,
+            item => Assert.Equal("matcha-cloud", item.Slug),
+            item => Assert.Equal("iced-maple-latte", item.Slug));
+    }
+
+    [Fact]
+    public async Task GetRecipesAsync_WhenSearchAndCategoryAreCombined_UsesAndSemantics()
+    {
+        await using var dbContext = CreateDbContext();
+        await RecipeListingTestData.SeedAsync(dbContext);
+        var reader = new RecipeSummaryReader(dbContext);
+
+        var response = await reader.GetRecipesAsync(new GetRecipesQuery(
+            Page: 1,
+            PageSize: 12,
+            Category: "Modern",
+            Search: "matcha"));
+
+        Assert.Equal(1, response.TotalCount);
+        Assert.Single(response.Items);
+        Assert.Equal("matcha-cloud", response.Items[0].Slug);
+    }
+
+    [Fact]
+    public async Task GetRecipesAsync_WhenSearchAndTagAreCombined_UsesAndSemantics()
+    {
+        await using var dbContext = CreateDbContext();
+        await RecipeListingTestData.SeedAsync(dbContext);
+        var reader = new RecipeSummaryReader(dbContext);
+
+        var response = await reader.GetRecipesAsync(new GetRecipesQuery(
+            Page: 1,
+            PageSize: 12,
+            Tags: ["citrus"],
+            Search: "espresso"));
+
+        Assert.Equal(1, response.TotalCount);
+        Assert.Single(response.Items);
+        Assert.Equal("espresso-tonic", response.Items[0].Slug);
+    }
+
+    [Fact]
+    public async Task GetRecipesAsync_WhenSearchMatchesTitleAndIngredient_TitleMatchesArePrioritized()
+    {
+        await using var dbContext = CreateDbContext();
+        await RecipeListingTestData.SeedAsync(dbContext);
+        var reader = new RecipeSummaryReader(dbContext);
+
+        var response = await reader.GetRecipesAsync(new GetRecipesQuery(
+            Page: 1,
+            PageSize: 12,
+            Search: "matcha"));
+
+        Assert.Equal(2, response.TotalCount);
+        Assert.Collection(
+            response.Items,
+            item => Assert.Equal("matcha-cloud", item.Slug),
+            item => Assert.Equal("iced-maple-latte", item.Slug));
+    }
+
+    [Fact]
+    public async Task GetRecipesAsync_WhenSearchIsApplied_PreservesPaginationAndTotalCount()
+    {
+        await using var dbContext = CreateDbContext();
+        await RecipeListingTestData.SeedAsync(dbContext);
+        var reader = new RecipeSummaryReader(dbContext);
+
+        var response = await reader.GetRecipesAsync(new GetRecipesQuery(
+            Page: 1,
+            PageSize: 1,
+            Search: "matcha"));
+
+        Assert.Equal(2, response.TotalCount);
+        Assert.Single(response.Items);
+        Assert.Equal("matcha-cloud", response.Items[0].Slug);
+    }
+
+    [Fact]
+    public async Task GetRecipesAsync_WhenSearchHasNoMatches_ReturnsEmptyItemsAndZeroTotalCount()
+    {
+        await using var dbContext = CreateDbContext();
+        await RecipeListingTestData.SeedAsync(dbContext);
+        var reader = new RecipeSummaryReader(dbContext);
+
+        var response = await reader.GetRecipesAsync(new GetRecipesQuery(
+            Page: 1,
+            PageSize: 12,
+            Search: "does-not-exist"));
+
+        Assert.Equal(0, response.TotalCount);
+        Assert.Empty(response.Items);
+    }
+
     private static CoffeeCodexDbContext CreateDbContext()
     {
         var options = new DbContextOptionsBuilder<CoffeeCodexDbContext>()

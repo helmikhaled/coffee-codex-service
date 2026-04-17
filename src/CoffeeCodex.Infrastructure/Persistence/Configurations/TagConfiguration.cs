@@ -23,6 +23,11 @@ internal sealed class TagConfiguration : IEntityTypeConfiguration<Tag>
         builder.HasIndex(tag => tag.Name)
             .HasDatabaseName("ix_tags_name");
 
+        builder.HasIndex([nameof(Tag.Name)], "ix_tags_name_trgm_model")
+            .HasDatabaseName("ix_tags_name_trgm")
+            .HasMethod("gin")
+            .HasOperators("gin_trgm_ops");
+
         builder.HasMany(tag => tag.RecipeTags)
             .WithOne(recipeTag => recipeTag.Tag)
             .HasForeignKey(recipeTag => recipeTag.TagId);

@@ -118,6 +118,84 @@ public sealed class RecipesEndpointTest : IClassFixture<RecipeListingApiFactory>
     }
 
     [Fact]
+    public async Task GetRecipes_WhenSearchedByTitle_ReturnsMatchingRecipes()
+    {
+        using var response = await _httpClient.GetAsync("/recipes?search=affogato&page=1&pageSize=12");
+        var payload = await response.Content.ReadFromJsonAsync<PagedResponse<RecipeSummaryDto>>(JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(payload);
+        Assert.Equal(1, payload.TotalCount);
+        Assert.Single(payload.Items);
+        Assert.Equal("affogato-float", payload.Items[0].Slug);
+    }
+
+    [Fact]
+    public async Task GetRecipes_WhenSearchedByTagName_ReturnsMatchingRecipes()
+    {
+        using var response = await _httpClient.GetAsync("/recipes?search=sparkling&page=1&pageSize=12");
+        var payload = await response.Content.ReadFromJsonAsync<PagedResponse<RecipeSummaryDto>>(JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(payload);
+        Assert.Equal(1, payload.TotalCount);
+        Assert.Single(payload.Items);
+        Assert.Equal("espresso-tonic", payload.Items[0].Slug);
+    }
+
+    [Fact]
+    public async Task GetRecipes_WhenSearchedByIngredientName_ReturnsMatchingRecipes()
+    {
+        using var response = await _httpClient.GetAsync("/recipes?search=maple%20syrup&page=1&pageSize=12");
+        var payload = await response.Content.ReadFromJsonAsync<PagedResponse<RecipeSummaryDto>>(JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(payload);
+        Assert.Equal(1, payload.TotalCount);
+        Assert.Single(payload.Items);
+        Assert.Equal("iced-maple-latte", payload.Items[0].Slug);
+    }
+
+    [Fact]
+    public async Task GetRecipes_WhenSearchIsCaseInsensitive_ReturnsMatchingRecipes()
+    {
+        using var response = await _httpClient.GetAsync("/recipes?search=MaTcHa&page=1&pageSize=12");
+        var payload = await response.Content.ReadFromJsonAsync<PagedResponse<RecipeSummaryDto>>(JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(payload);
+        Assert.Equal(2, payload.TotalCount);
+        Assert.Collection(
+            payload.Items,
+            item => Assert.Equal("matcha-cloud", item.Slug),
+            item => Assert.Equal("iced-maple-latte", item.Slug));
+    }
+
+    [Fact]
+    public async Task GetRecipes_WhenSearchExceedsMaxLength_ReturnsBadRequest()
+    {
+        var overMaxSearch = new string('a', RecipeListingDefaults.MaxSearchLength + 1);
+        using var response = await _httpClient.GetAsync(
+            $"/recipes?search={Uri.EscapeDataString(overMaxSearch)}&page=1&pageSize=12");
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetRecipes_WhenSearchAndFiltersAreCombined_ReturnsMatchingRecipes()
+    {
+        using var response = await _httpClient.GetAsync(
+            "/recipes?search=matcha&category=Iced&tag=iced&page=1&pageSize=12");
+        var payload = await response.Content.ReadFromJsonAsync<PagedResponse<RecipeSummaryDto>>(JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(payload);
+        Assert.Equal(1, payload.TotalCount);
+        Assert.Single(payload.Items);
+        Assert.Equal("iced-maple-latte", payload.Items[0].Slug);
+    }
+
+    [Fact]
     public async Task GetRecipeById_WhenRecipeExists_ReturnsOk()
     {
         using var response = await _httpClient.GetAsync($"/recipes/{RecipeListingTestData.EspressoTonicId}");

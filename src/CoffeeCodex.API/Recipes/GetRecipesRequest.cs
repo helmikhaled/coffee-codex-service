@@ -6,7 +6,8 @@ public sealed record GetRecipesRequest(
     int Page = RecipeListingDefaults.DefaultPage,
     int PageSize = RecipeListingDefaults.DefaultPageSize,
     string? Category = null,
-    string[]? Tag = null)
+    string[]? Tag = null,
+    string? Search = null)
 {
     public GetRecipesQuery ToQuery()
     {
@@ -15,10 +16,15 @@ public sealed record GetRecipesRequest(
             .Distinct(StringComparer.Ordinal)
             .ToArray();
 
+        var normalizedSearch = string.IsNullOrWhiteSpace(Search)
+            ? null
+            : Search.Trim();
+
         return new GetRecipesQuery(
             Page,
             PageSize,
             Category,
-            normalizedTags);
+            normalizedTags,
+            normalizedSearch);
     }
 }

@@ -3,6 +3,7 @@ using System;
 using CoffeeCodex.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CoffeeCodex.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(CoffeeCodexDbContext))]
-    partial class CoffeeCodexDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260417133750_AddRecipeSearchIndexes")]
+    partial class AddRecipeSearchIndexes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,13 +310,10 @@ namespace CoffeeCodex.Infrastructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
-                        .HasDatabaseName("ix_tags_name");
-
-                    b.HasIndex(new[] { "Name" }, "ix_tags_name_trgm_model")
                         .HasDatabaseName("ix_tags_name_trgm");
 
-                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex(new[] { "Name" }, "ix_tags_name_trgm_model"), "gin");
-                    NpgsqlIndexBuilderExtensions.HasOperators(b.HasIndex(new[] { "Name" }, "ix_tags_name_trgm_model"), new[] { "gin_trgm_ops" });
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Name"), "gin");
+                    NpgsqlIndexBuilderExtensions.HasOperators(b.HasIndex("Name"), new[] { "gin_trgm_ops" });
 
                     b.ToTable("tags", (string)null);
                 });
