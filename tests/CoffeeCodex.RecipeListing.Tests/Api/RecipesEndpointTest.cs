@@ -221,6 +221,99 @@ public sealed class RecipesEndpointTest : IClassFixture<RecipeListingApiFactory>
     }
 
     [Fact]
+    public async Task RecordRecipeView_WhenRecipeExists_ReturnsNoContent()
+    {
+        await using var factory = new RecipeListingApiFactory($"recipe-view-success-{Guid.NewGuid():N}");
+        using var client = factory.CreateClient();
+        using var response = await client.PostAsync(
+            $"/recipes/{RecipeListingTestData.EspressoTonicId}/view",
+            content: null);
+
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task RecordRecipeView_WhenRecipeDoesNotExist_ReturnsNotFound()
+    {
+        await using var factory = new RecipeListingApiFactory($"recipe-view-missing-{Guid.NewGuid():N}");
+        using var client = factory.CreateClient();
+        using var response = await client.PostAsync(
+            $"/recipes/{Guid.NewGuid()}/view",
+            content: null);
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task RecordRecipeView_WhenRecipeExists_DetailEndpointReturnsIncrementedBrewCount()
+    {
+        await using var factory = new RecipeListingApiFactory($"recipe-view-detail-{Guid.NewGuid():N}");
+        using var client = factory.CreateClient();
+
+        using var postResponse = await client.PostAsync(
+            $"/recipes/{RecipeListingTestData.EspressoTonicId}/view",
+            content: null);
+        using var detailResponse = await client.GetAsync($"/recipes/{RecipeListingTestData.EspressoTonicId}");
+        var payload = await detailResponse.Content.ReadFromJsonAsync<RecipeDetailDto>(JsonOptions);
+
+        Assert.Equal(HttpStatusCode.NoContent, postResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, detailResponse.StatusCode);
+        Assert.NotNull(payload);
+        Assert.Equal(125, payload.BrewCount);
+    }
+
+    [Fact]
+    public async Task RecordRecipeView_WhenRecipeExists_ListEndpointReturnsIncrementedBrewCount()
+    {
+        await using var factory = new RecipeListingApiFactory($"recipe-view-list-{Guid.NewGuid():N}");
+        using var client = factory.CreateClient();
+
+        using var postResponse = await client.PostAsync(
+            $"/recipes/{RecipeListingTestData.EspressoTonicId}/view",
+            content: null);
+        using var listResponse = await client.GetAsync("/recipes?page=1&pageSize=12");
+        var payload = await listResponse.Content.ReadFromJsonAsync<PagedResponse<RecipeSummaryDto>>(JsonOptions);
+        var recipe = payload?.Items.Single(item => item.Id == RecipeListingTestData.EspressoTonicId);
+
+        Assert.Equal(HttpStatusCode.NoContent, postResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, listResponse.StatusCode);
+        Assert.NotNull(recipe);
+        Assert.Equal(125, recipe.BrewCount);
+    }
+
+    [Fact]
+    public async Task RecordRecipeView_WhenCalledTwice_DetailEndpointReturnsCumulativeBrewCount()
+    {
+        await using var factory = new RecipeListingApiFactory($"recipe-view-cumulative-{Guid.NewGuid():N}");
+        using var client = factory.CreateClient();
+
+        using var firstResponse = await client.PostAsync(
+            $"/recipes/{RecipeListingTestData.EspressoTonicId}/view",
+            content: null);
+        using var secondResponse = await client.PostAsync(
+            $"/recipes/{RecipeListingTestData.EspressoTonicId}/view",
+            content: null);
+        using var detailResponse = await client.GetAsync($"/recipes/{RecipeListingTestData.EspressoTonicId}");
+        var payload = await detailResponse.Content.ReadFromJsonAsync<RecipeDetailDto>(JsonOptions);
+
+        Assert.Equal(HttpStatusCode.NoContent, firstResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.NoContent, secondResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, detailResponse.StatusCode);
+        Assert.NotNull(payload);
+        Assert.Equal(126, payload.BrewCount);
+    }
+
+    [Fact]
+    public async Task RecordRecipeView_WhenIdIsEmpty_ReturnsBadRequest()
+    {
+        using var response = await _httpClient.PostAsync(
+            "/recipes/00000000-0000-0000-0000-000000000000/view",
+            content: null);
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
     public async Task GetRecipeById_WhenRecipeExists_ReturnsOk()
     {
         using var response = await _httpClient.GetAsync($"/recipes/{RecipeListingTestData.EspressoTonicId}");
@@ -296,12 +389,26 @@ public sealed class RecipesEndpointTest : IClassFixture<RecipeListingApiFactory>
     }
 }
 
-public sealed class RecipeListingApiFactory : WebApplicationFactory<Program>
+public class RecipeListingApiFactory : WebApplicationFactory<Program>
 {
+    private readonly string _databaseName;
+    private readonly bool _seedData;
+
+    public RecipeListingApiFactory()
+        : this("recipe-listing-api-tests")
+    {
+    }
+
+    internal RecipeListingApiFactory(string databaseName, bool seedData = true)
+    {
+        _databaseName = databaseName;
+        _seedData = seedData;
+    }
+
     protected override void ConfigureWebHost(Microsoft.AspNetCore.Hosting.IWebHostBuilder builder)
     {
         Environment.SetEnvironmentVariable("Persistence__UseInMemory", "true");
-        Environment.SetEnvironmentVariable("Persistence__InMemoryDatabaseName", "recipe-listing-api-tests");
+        Environment.SetEnvironmentVariable("Persistence__InMemoryDatabaseName", _databaseName);
 
         builder.UseEnvironment("Testing");
         builder.ConfigureAppConfiguration((_, configurationBuilder) =>
@@ -309,7 +416,7 @@ public sealed class RecipeListingApiFactory : WebApplicationFactory<Program>
             configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
             {
                 ["Persistence:UseInMemory"] = "true",
-                ["Persistence:InMemoryDatabaseName"] = "recipe-listing-api-tests",
+                ["Persistence:InMemoryDatabaseName"] = _databaseName,
             });
         });
 
@@ -320,35 +427,19 @@ public sealed class RecipeListingApiFactory : WebApplicationFactory<Program>
 
             dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();
-            RecipeListingTestData.SeedAsync(dbContext).GetAwaiter().GetResult();
+
+            if (_seedData)
+            {
+                RecipeListingTestData.SeedAsync(dbContext).GetAwaiter().GetResult();
+            }
         });
     }
 }
 
-public sealed class EmptyRecipeListingApiFactory : WebApplicationFactory<Program>
+public sealed class EmptyRecipeListingApiFactory : RecipeListingApiFactory
 {
-    protected override void ConfigureWebHost(Microsoft.AspNetCore.Hosting.IWebHostBuilder builder)
+    public EmptyRecipeListingApiFactory()
+        : base("recipe-listing-api-tests-empty", seedData: false)
     {
-        Environment.SetEnvironmentVariable("Persistence__UseInMemory", "true");
-        Environment.SetEnvironmentVariable("Persistence__InMemoryDatabaseName", "recipe-listing-api-tests-empty");
-
-        builder.UseEnvironment("Testing");
-        builder.ConfigureAppConfiguration((_, configurationBuilder) =>
-        {
-            configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
-            {
-                ["Persistence:UseInMemory"] = "true",
-                ["Persistence:InMemoryDatabaseName"] = "recipe-listing-api-tests-empty",
-            });
-        });
-
-        builder.ConfigureServices(services =>
-        {
-            using var scope = services.BuildServiceProvider().CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<CoffeeCodexDbContext>();
-
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
-        });
     }
 }

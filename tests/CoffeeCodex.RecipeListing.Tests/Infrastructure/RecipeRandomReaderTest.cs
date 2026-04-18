@@ -19,12 +19,13 @@ public sealed class RecipeRandomReaderTest
         Assert.NotNull(result);
         Assert.Contains(
             result.Id,
-            [
+            new[]
+            {
                 RecipeListingTestData.EspressoTonicId,
                 RecipeListingTestData.IcedMapleLatteId,
                 RecipeListingTestData.MatchaCloudId,
                 RecipeListingTestData.AffogatoFloatId,
-            ]);
+            });
     }
 
     [Fact]

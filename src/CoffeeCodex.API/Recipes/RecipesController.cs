@@ -1,3 +1,4 @@
+using CoffeeCodex.Application.Recipes.Commands.RecordRecipeView;
 using CoffeeCodex.Application.Recipes.Queries.GetRecipeDetail;
 using CoffeeCodex.Application.Recipes.Queries.GetRandomRecipe;
 using CoffeeCodex.Application.Recipes.Queries.GetRecipes;
@@ -10,6 +11,7 @@ namespace CoffeeCodex.API.Recipes;
 [ApiController]
 [Route("recipes")]
 public sealed class RecipesController(
+    IRecordRecipeViewHandler recordRecipeViewHandler,
     IGetRecipesHandler getRecipesHandler,
     IGetRandomRecipeHandler getRandomRecipeHandler,
     IGetRecipeDetailHandler getRecipeDetailHandler) : ControllerBase
@@ -52,6 +54,38 @@ public sealed class RecipesController(
         }
 
         return Ok(response);
+    }
+
+    [HttpPost("{id:guid}/view")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RecordRecipeView(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var wasRecorded = await recordRecipeViewHandler.HandleAsync(
+                new RecordRecipeViewCommand(id),
+                cancellationToken);
+
+            if (!wasRecorded)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+        catch (ValidationException exception)
+        {
+            foreach (var error in exception.Errors)
+            {
+                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            }
+
+            return ValidationProblem(ModelState);
+        }
     }
 
     [HttpGet("{id:guid}")]

@@ -4,7 +4,7 @@ Tasks must be executed sequentially.
 
 ---
 
-# Task 1 - Finalize View Tracking Contract [ ]
+# Task 1 - Finalize View Tracking Contract [x]
 
 Lock the API behavior before implementation.
 
@@ -25,7 +25,7 @@ Verify:
 
 ---
 
-# Task 2 - Add Application Command Model [ ]
+# Task 2 - Add Application Command Model [x]
 
 Create the write-side request model for the feature.
 
@@ -43,7 +43,7 @@ Verify:
 
 ---
 
-# Task 3 - Add Command Validation [ ]
+# Task 3 - Add Command Validation [x]
 
 Protect the command contract with lightweight validation.
 
@@ -61,7 +61,7 @@ Verify:
 
 ---
 
-# Task 4 - Add Application Handler And Recorder Contracts [ ]
+# Task 4 - Add Application Handler And Recorder Contracts [x]
 
 Define the Application-side abstractions for the write path.
 
@@ -81,7 +81,7 @@ Verify:
 
 ---
 
-# Task 5 - Implement Application Handler [ ]
+# Task 5 - Implement Application Handler [x]
 
 Implement the recipe-view use case orchestration.
 
@@ -101,7 +101,7 @@ Verify:
 
 ---
 
-# Task 6 - Register Application Services [ ]
+# Task 6 - Register Application Services [x]
 
 Wire the new command slice into DI.
 
@@ -120,7 +120,7 @@ Verify:
 
 ---
 
-# Task 7 - Implement Infrastructure View Recorder [ ]
+# Task 7 - Implement Infrastructure View Recorder [x]
 
 Add the database update path for view tracking.
 
@@ -143,7 +143,7 @@ Verify:
 
 ---
 
-# Task 8 - Register Infrastructure Recorder [ ]
+# Task 8 - Register Infrastructure Recorder [x]
 
 Wire the Infrastructure implementation into DI.
 
@@ -161,7 +161,7 @@ Verify:
 
 ---
 
-# Task 9 - Add POST /recipes/{id}/view Controller Action [ ]
+# Task 9 - Add POST /recipes/{id}/view Controller Action [x]
 
 Expose the new use case through the existing recipes controller.
 
@@ -184,7 +184,7 @@ Verify:
 
 ---
 
-# Task 10 - Add Endpoint Metadata [ ]
+# Task 10 - Add Endpoint Metadata [x]
 
 Document the new API surface in controller metadata.
 
@@ -204,7 +204,7 @@ Verify:
 
 ---
 
-# Task 11 - Add Application Handler Tests [ ]
+# Task 11 - Add Application Handler Tests [x]
 
 Protect the Application-layer behavior for the new command slice.
 
@@ -224,7 +224,7 @@ Verify:
 
 ---
 
-# Task 12 - Add Infrastructure Recorder Tests [ ]
+# Task 12 - Add Infrastructure Recorder Tests [x]
 
 Protect the persistence behavior for brew-count increments.
 
@@ -244,7 +244,7 @@ Verify:
 
 ---
 
-# Task 13 - Add API Integration Test For Success Path [ ]
+# Task 13 - Add API Integration Test For Success Path [x]
 
 Protect the endpoint-level success behavior.
 
@@ -262,7 +262,7 @@ Verify:
 
 ---
 
-# Task 14 - Add API Integration Test For Missing Recipe [ ]
+# Task 14 - Add API Integration Test For Missing Recipe [x]
 
 Protect the endpoint-level not-found behavior.
 
@@ -280,7 +280,7 @@ Verify:
 
 ---
 
-# Task 15 - Add API Read-After-Write Regression Tests [ ]
+# Task 15 - Add API Read-After-Write Regression Tests [x]
 
 Verify the integration requirement that updated counts appear in existing recipe reads.
 
@@ -300,7 +300,7 @@ Verify:
 
 ---
 
-# Task 16 - Add Validation Regression Test For Empty Guid [ ]
+# Task 16 - Add Validation Regression Test For Empty Guid [x]
 
 Protect the invalid-input edge case on the new endpoint.
 
@@ -318,7 +318,7 @@ Verify:
 
 ---
 
-# Task 17 - Run Automated Verification [ ]
+# Task 17 - Run Automated Verification [x]
 
 Run the repository tests that cover the modified slice.
 
@@ -333,7 +333,7 @@ Verify:
 
 ---
 
-# Task 18 - Run Runtime, Performance, And Observability Checks [ ]
+# Task 18 - Run Runtime, Performance, And Observability Checks [x]
 
 Perform final non-functional verification for the feature.
 
