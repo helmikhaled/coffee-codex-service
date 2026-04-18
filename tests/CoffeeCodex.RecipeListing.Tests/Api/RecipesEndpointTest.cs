@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using CoffeeCodex.Application.Recipes.Queries.GetRecipeDetail;
+using CoffeeCodex.Application.Recipes.Queries.GetRandomRecipe;
 using CoffeeCodex.Application.Recipes.Queries.GetRecipes;
 using Microsoft.AspNetCore.Hosting;
 using CoffeeCodex.Infrastructure.Persistence;
@@ -196,6 +197,30 @@ public sealed class RecipesEndpointTest : IClassFixture<RecipeListingApiFactory>
     }
 
     [Fact]
+    public async Task GetRandomRecipe_WhenRecipesExist_ReturnsOkAndResolvableRecipeId()
+    {
+        using var response = await _httpClient.GetAsync("/recipes/random");
+        var payload = await response.Content.ReadFromJsonAsync<RandomRecipeDto>(JsonOptions);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(payload);
+        Assert.NotEqual(Guid.Empty, payload.Id);
+
+        using var detailResponse = await _httpClient.GetAsync($"/recipes/{payload.Id}");
+        Assert.Equal(HttpStatusCode.OK, detailResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetRandomRecipe_WhenNoRecipesExist_ReturnsNotFound()
+    {
+        await using var factory = new EmptyRecipeListingApiFactory();
+        using var client = factory.CreateClient();
+        using var response = await client.GetAsync("/recipes/random");
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
     public async Task GetRecipeById_WhenRecipeExists_ReturnsOk()
     {
         using var response = await _httpClient.GetAsync($"/recipes/{RecipeListingTestData.EspressoTonicId}");
@@ -296,6 +321,34 @@ public sealed class RecipeListingApiFactory : WebApplicationFactory<Program>
             dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();
             RecipeListingTestData.SeedAsync(dbContext).GetAwaiter().GetResult();
+        });
+    }
+}
+
+public sealed class EmptyRecipeListingApiFactory : WebApplicationFactory<Program>
+{
+    protected override void ConfigureWebHost(Microsoft.AspNetCore.Hosting.IWebHostBuilder builder)
+    {
+        Environment.SetEnvironmentVariable("Persistence__UseInMemory", "true");
+        Environment.SetEnvironmentVariable("Persistence__InMemoryDatabaseName", "recipe-listing-api-tests-empty");
+
+        builder.UseEnvironment("Testing");
+        builder.ConfigureAppConfiguration((_, configurationBuilder) =>
+        {
+            configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["Persistence:UseInMemory"] = "true",
+                ["Persistence:InMemoryDatabaseName"] = "recipe-listing-api-tests-empty",
+            });
+        });
+
+        builder.ConfigureServices(services =>
+        {
+            using var scope = services.BuildServiceProvider().CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<CoffeeCodexDbContext>();
+
+            dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureCreated();
         });
     }
 }

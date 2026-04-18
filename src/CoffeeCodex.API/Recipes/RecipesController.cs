@@ -1,4 +1,5 @@
 using CoffeeCodex.Application.Recipes.Queries.GetRecipeDetail;
+using CoffeeCodex.Application.Recipes.Queries.GetRandomRecipe;
 using CoffeeCodex.Application.Recipes.Queries.GetRecipes;
 using CoffeeCodex.Shared.Pagination;
 using FluentValidation;
@@ -10,6 +11,7 @@ namespace CoffeeCodex.API.Recipes;
 [Route("recipes")]
 public sealed class RecipesController(
     IGetRecipesHandler getRecipesHandler,
+    IGetRandomRecipeHandler getRandomRecipeHandler,
     IGetRecipeDetailHandler getRecipeDetailHandler) : ControllerBase
 {
     [HttpGet]
@@ -34,6 +36,22 @@ public sealed class RecipesController(
 
             return ValidationProblem(ModelState);
         }
+    }
+
+    [HttpGet("random")]
+    [ProducesResponseType(typeof(RandomRecipeDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<RandomRecipeDto>> GetRandomRecipe(
+        CancellationToken cancellationToken)
+    {
+        var response = await getRandomRecipeHandler.HandleAsync(new GetRandomRecipeQuery(), cancellationToken);
+
+        if (response is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(response);
     }
 
     [HttpGet("{id:guid}")]

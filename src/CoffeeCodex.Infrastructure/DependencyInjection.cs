@@ -1,4 +1,5 @@
 using CoffeeCodex.Application.Recipes.Queries.GetRecipeDetail;
+using CoffeeCodex.Application.Recipes.Queries.GetRandomRecipe;
 using CoffeeCodex.Application.Recipes.Queries.GetRecipes;
 using CoffeeCodex.Infrastructure.Persistence;
 using CoffeeCodex.Infrastructure.Recipes;
@@ -41,6 +42,7 @@ public static class DependencyInjection
             options.UseNpgsql(connectionString);
         });
         services.AddScoped<IRecipeDetailReader, RecipeDetailReader>();
+        services.AddScoped<IRecipeRandomReader, RecipeRandomReader>();
         services.AddScoped<IRecipeSummaryReader, RecipeSummaryReader>();
 
         return services;

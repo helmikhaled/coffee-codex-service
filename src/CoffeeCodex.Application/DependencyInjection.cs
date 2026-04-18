@@ -1,4 +1,5 @@
 using CoffeeCodex.Application.Recipes.Queries.GetRecipeDetail;
+using CoffeeCodex.Application.Recipes.Queries.GetRandomRecipe;
 using CoffeeCodex.Application.Recipes.Queries.GetRecipes;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IValidator<GetRecipeDetailQuery>, GetRecipeDetailQueryValidator>();
         services.AddScoped<IGetRecipeDetailHandler, GetRecipeDetailHandler>();
+        services.AddScoped<IGetRandomRecipeHandler, GetRandomRecipeHandler>();
         services.AddScoped<IValidator<GetRecipesQuery>, GetRecipesQueryValidator>();
         services.AddScoped<IGetRecipesHandler, GetRecipesHandler>();
 
