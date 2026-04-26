@@ -11,6 +11,7 @@ using CoffeeCodex.Shared.Pagination;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace CoffeeCodex.RecipeListing.Tests.Api;
 
@@ -27,6 +28,24 @@ public sealed class RecipesEndpointTest : IClassFixture<RecipeListingApiFactory>
     public RecipesEndpointTest(RecipeListingApiFactory factory)
     {
         _httpClient = factory.CreateClient();
+    }
+
+    [Fact]
+    public async Task PublicRecipeEndpoints_WhenAnonymous_RemainAccessible()
+    {
+        await using var factory = new RecipeListingApiFactory($"public-endpoints-anonymous-{Guid.NewGuid():N}");
+        using var client = factory.CreateClient();
+        using var listResponse = await client.GetAsync("/recipes?page=1&pageSize=1");
+        using var detailResponse = await client.GetAsync($"/recipes/{RecipeListingTestData.EspressoTonicId}");
+        using var randomResponse = await client.GetAsync("/recipes/random");
+        using var viewResponse = await client.PostAsync(
+            $"/recipes/{RecipeListingTestData.EspressoTonicId}/view",
+            content: null);
+
+        Assert.Equal(HttpStatusCode.OK, listResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, detailResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, randomResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.NoContent, viewResponse.StatusCode);
     }
 
     [Fact]
@@ -393,9 +412,11 @@ public class RecipeListingApiFactory : WebApplicationFactory<Program>
 {
     private readonly string _databaseName;
     private readonly bool _seedData;
+    private readonly object _databaseInitializationLock = new();
+    private bool _databaseInitialized;
 
     public RecipeListingApiFactory()
-        : this("recipe-listing-api-tests")
+        : this($"recipe-listing-api-tests-{Guid.NewGuid():N}")
     {
     }
 
@@ -420,9 +441,20 @@ public class RecipeListingApiFactory : WebApplicationFactory<Program>
             });
         });
 
-        builder.ConfigureServices(services =>
+    }
+
+    protected override IHost CreateHost(IHostBuilder builder)
+    {
+        var host = base.CreateHost(builder);
+
+        lock (_databaseInitializationLock)
         {
-            using var scope = services.BuildServiceProvider().CreateScope();
+            if (_databaseInitialized)
+            {
+                return host;
+            }
+
+            using var scope = host.Services.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<CoffeeCodexDbContext>();
 
             dbContext.Database.EnsureDeleted();
@@ -432,14 +464,18 @@ public class RecipeListingApiFactory : WebApplicationFactory<Program>
             {
                 RecipeListingTestData.SeedAsync(dbContext).GetAwaiter().GetResult();
             }
-        });
+
+            _databaseInitialized = true;
+        }
+
+        return host;
     }
 }
 
 public sealed class EmptyRecipeListingApiFactory : RecipeListingApiFactory
 {
     public EmptyRecipeListingApiFactory()
-        : base("recipe-listing-api-tests-empty", seedData: false)
+        : base($"recipe-listing-api-tests-empty-{Guid.NewGuid():N}", seedData: false)
     {
     }
 }

@@ -48,4 +48,9 @@ jobs:
             --name coffee-codex-api \
             --resource-group coffee-codex-rg \
             --image docker.io/helmikhaled/coffee-codex-api:${{ github.sha }} \
-            --set-env-vars ConnectionStrings__PostgreSql="${{ secrets.COFFEECODEXAPI_POSTGRESQL_CONNECTION_STRING }}"
+            --set-env-vars \
+              ConnectionStrings__PostgreSql="${{ secrets.COFFEECODEXAPI_POSTGRESQL_CONNECTION_STRING }}" \
+              Auth0__Domain="${{ secrets.COFFEECODEXAPI_AUTH0_DOMAIN }}" \
+              Auth0__Audience="${{ secrets.COFFEECODEXAPI_AUTH0_AUDIENCE }}" \
+              Auth0__ClientId="${{ secrets.COFFEECODEXAPI_AUTH0_CLIENT_ID }}" \
+              Auth0__ClientSecret="${{ secrets.COFFEECODEXAPI_AUTH0_CLIENT_SECRET }}"

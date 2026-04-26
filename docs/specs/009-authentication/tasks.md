@@ -4,7 +4,7 @@ Tasks must be executed sequentially.
 
 ---
 
-# Task 1 - Finalize The Authentication Contract [ ]
+# Task 1 - Finalize The Authentication Contract [x]
 
 Lock the MVP behavior before implementation starts.
 
@@ -30,7 +30,7 @@ Verify:
 
 ---
 
-# Task 2 - Tighten The Auth0 Settings Model [ ]
+# Task 2 - Tighten The Auth0 Settings Model [x]
 
 Turn the existing placeholder settings object into a clear API-auth configuration contract.
 
@@ -51,7 +51,7 @@ Verify:
 
 ---
 
-# Task 3 - Add Startup Validation For Authentication Settings [ ]
+# Task 3 - Add Startup Validation For Authentication Settings [x]
 
 Fail fast when authentication configuration is incomplete or invalid.
 
@@ -77,7 +77,7 @@ Verify:
 
 ---
 
-# Task 4 - Align Appsettings With The Validated Auth Contract [ ]
+# Task 4 - Align Appsettings With The Validated Auth Contract [x]
 
 Keep repository configuration files consistent with the runtime auth model.
 
@@ -98,7 +98,7 @@ Verify:
 
 ---
 
-# Task 5 - Register JWT Bearer Authentication [ ]
+# Task 5 - Register JWT Bearer Authentication [x]
 
 Wire the API to validate Auth0-issued bearer tokens.
 
@@ -123,7 +123,7 @@ Verify:
 
 ---
 
-# Task 6 - Register The Shared Admin Authorization Policy [ ]
+# Task 6 - Register The Shared Admin Authorization Policy [x]
 
 Create one reusable authorization policy for current and future admin endpoints.
 
@@ -146,7 +146,7 @@ Verify:
 
 ---
 
-# Task 7 - Add Authentication And Authorization Middleware [ ]
+# Task 7 - Add Authentication And Authorization Middleware [x]
 
 Insert the new security pipeline into request processing.
 
@@ -167,7 +167,7 @@ Verify:
 
 ---
 
-# Task 8 - Add The Protected Admin Probe Endpoint [ ]
+# Task 8 - Add The Protected Admin Probe Endpoint [x]
 
 Expose a minimal protected API surface that proves the auth pipeline end-to-end.
 
@@ -188,7 +188,7 @@ Verify:
 
 ---
 
-# Task 9 - Add Protected Endpoint Metadata And OpenAPI Security Wiring [ ]
+# Task 9 - Add Protected Endpoint Metadata And OpenAPI Security Wiring [x]
 
 Make the protected surface discoverable in development tooling.
 
@@ -211,7 +211,7 @@ Verify:
 
 ---
 
-# Task 10 - Preserve Anonymous Public Endpoint Behavior [ ]
+# Task 10 - Preserve Anonymous Public Endpoint Behavior [x]
 
 Ensure the new auth setup does not change the recipe discovery contract.
 
@@ -232,7 +232,7 @@ Verify:
 
 ---
 
-# Task 11 - Create JWT Test Utilities And Auth-Capable Test Host Support [ ]
+# Task 11 - Create JWT Test Utilities And Auth-Capable Test Host Support [x]
 
 Make the auth slice testable without depending on live Auth0 infrastructure.
 
@@ -256,7 +256,7 @@ Verify:
 
 ---
 
-# Task 12 - Add Authentication Configuration Tests [ ]
+# Task 12 - Add Authentication Configuration Tests [x]
 
 Protect the fail-fast startup behavior for auth settings.
 
@@ -276,7 +276,7 @@ Verify:
 
 ---
 
-# Task 13 - Add Unauthorized Integration Tests For The Protected Endpoint [ ]
+# Task 13 - Add Unauthorized Integration Tests For The Protected Endpoint [x]
 
 Protect the core rejection paths required by the PRD.
 
@@ -298,7 +298,7 @@ Verify:
 
 ---
 
-# Task 14 - Add Valid-Token Integration Test For The Protected Endpoint [ ]
+# Task 14 - Add Valid-Token Integration Test For The Protected Endpoint [x]
 
 Protect the success path for authenticated admin access.
 
@@ -316,7 +316,7 @@ Verify:
 
 ---
 
-# Task 15 - Add Anonymous Public-Endpoint Regression Tests [ ]
+# Task 15 - Add Anonymous Public-Endpoint Regression Tests [x]
 
 Prove that authentication only applies to admin APIs.
 
@@ -337,7 +337,7 @@ Verify:
 
 ---
 
-# Task 16 - Run Focused Automated Verification [ ]
+# Task 16 - Run Focused Automated Verification [x]
 
 Run the repository tests that cover the authentication slice and the affected public API regressions.
 
@@ -352,7 +352,7 @@ Verify:
 
 ---
 
-# Task 17 - Run Runtime Authentication Smoke Checks [ ]
+# Task 17 - Run Runtime Authentication Smoke Checks [x]
 
 Perform manual end-to-end checks against the running API.
 
@@ -369,7 +369,7 @@ Verify:
 
 ---
 
-# Task 18 - Validate Observability And Handoff Readiness [ ]
+# Task 18 - Validate Observability And Handoff Readiness [x]
 
 Confirm the feature is ready for dependent specs.
 
